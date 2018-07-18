@@ -3,6 +3,7 @@ import logo from './logo.svg';
 import './App.css';
 
 import feeds from './rssFeeds';
+import ShuffledPlaylist from './shuffle';
 
 class App extends Component {
   constructor(...args) {
@@ -13,7 +14,18 @@ class App extends Component {
 
   componentDidMount() {
     feeds
-      .then(feedResults => this.setState({ feeds: feedResults}))
+      .then(feedResults => {
+        const allEpisodes = feedResults.map(r => r.items).reduce((flat, toFlatten) => flat.concat(toFlatten), []);
+        console.log(allEpisodes.length);
+        const allEpisodeUrls = allEpisodes.filter( e => !!(e && e.enclosure && e.enclosure.url)).map(e => e.enclosure.url);
+        console.log(allEpisodeUrls.length);
+        const playlist = new ShuffledPlaylist(allEpisodeUrls);
+        const first100 = [];
+        for (let i = 0; i < 100; i++) {
+          first100.push(playlist.nextItem());
+        }
+        this.setState({ feeds: first100 });
+      })
       .catch(e => this.setState({ error: e }))
   }
 
