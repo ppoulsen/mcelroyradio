@@ -13,7 +13,7 @@ export default class ShuffledPlaylist {
   }
 
   nextItem() {
-    const randomIndex = Math.floor(Math.random() * this.items.length);1
+    const randomIndex = Math.floor(Math.random() * this.items.length);
     const result = this.items.splice(randomIndex, 1)[0];
     this.discard.push(result);
     if (this.discard.length > this.options.dontRepeatFor) {
