@@ -1,8 +1,8 @@
 // Need to specify dist since rss-parser currently exposes the source code by default
 /* global RSSParser */
-import 'rss-parser/dist/rss-parser';
+const RSSParser = require('rss-parser');
 
-import feeds from './feeds';
+const feeds = require('./feeds');
 
 const parser = new RSSParser();
 
@@ -11,4 +11,4 @@ feeds.map(feed => parser.parseURL(feed)).forEach(feedPromise => promises.push(fe
 
 const allPromise = Promise.all(promises);
 
-export default allPromise;
+module.exports = allPromise;

@@ -1,0 +1,23 @@
+{
+  "name": "mcelroyradio",
+  "version": "1.0.0",
+  "description": "Server for McelroyRadio",
+  "main": "server.js",
+  "repository": "https://github.com/ppoulsen/mcelroyradio.git",
+  "author": "Paul Poulsen <ppoulsen21@gmail.com>",
+  "license": "MIT",
+  "scripts": {
+    "build": "cd client && npm run build",
+    "start": "concurrently \"npm run server\" \"npm run client\"",
+    "start:prod": "npm run build && cross-env NODE_ENV=production npm run server",
+    "server": "node server.js",
+    "client": "cd client && npm run start"
+  },
+  "dependencies": {
+    "concurrently": "^3.6.1",
+    "cross-env": "^5.2.0",
+    "express": "^4.16.3",
+    "helmet": "^3.13.0",
+    "rss-parser": "^3.4.2"
+  }
+}

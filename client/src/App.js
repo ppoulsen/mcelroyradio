@@ -21,7 +21,7 @@ class App extends Component {
 
         const allEpisodes = feedResults.map(r => r.items).reduce((flat, toFlatten) => flat.concat(toFlatten), []);
         const allEpisodesWithUrls = allEpisodes.filter( e => !!(e && e.enclosure && e.enclosure.url));
-        this.playlist = new ShuffledPlaylist(allEpisodesWithUrls);
+        window.debugPlaylist = this.playlist = new ShuffledPlaylist(allEpisodesWithUrls);
         this.onPlayNext();
       })
       .catch(e => this.setState({ error: e }))
@@ -35,7 +35,7 @@ class App extends Component {
       delete this.audioElement;
     }
     const nowPlaying = this.playlist.nextItem();
-    window.debugAudio = this.audioElement = new Audio(nowPlaying.enclosure.url);
+    this.audioElement = new Audio(nowPlaying.enclosure.url);
     this.audioElement.addEventListener('ended', this.onPlayNext);
     this.audioElement.addEventListener('timeupdate', this.onTimeUpdate)
     this.audioElement.addEventListener('durationchange', this.onDurationUpdate)
