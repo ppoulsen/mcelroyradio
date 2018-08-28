@@ -7,12 +7,17 @@
 
   display: flex;
   justify-content: center;
-  align-items: flex-end;
+  align-items: center;
   color: #FEFEFE;
 }
 
 .player-controls__time {
   margin: 1rem;
+}
+
+.player-controls__right-controls {
+  margin-right: 1rem;
+  font-size: 2rem;
 }
 
 .player-controls__progress-container {
@@ -43,7 +48,7 @@
   animation: progress-bar-stripes 2s linear infinite;
 }
 
-@keyframes progress-bar-stripes { 
+@keyframes progress-bar-stripes {
   from { background-position: 0 0 }
   to { background-position: 2.5rem 0 }
 }

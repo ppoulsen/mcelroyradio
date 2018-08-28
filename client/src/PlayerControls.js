@@ -8,6 +8,7 @@ export default class PlayerControls extends React.PureComponent {
     const {
       currentTimeSeconds,
       durationSeconds,
+      onNextClick,
     } = this.props;
 
     const currentTime = isNaN(currentTimeSeconds) || currentTimeSeconds === Infinity ? 0 : currentTimeSeconds;
@@ -27,6 +28,9 @@ export default class PlayerControls extends React.PureComponent {
           </div>
         </div>
         <p className="player-controls__time">{formattedDuration}</p>
+        <div className="player-controls__right-controls">
+          <span onClick={onNextClick}>▶</span>
+        </div>
       </div>
     );
   }

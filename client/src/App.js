@@ -32,6 +32,11 @@ class App extends Component {
       this.audioElement.removeEventListener('ended', this.onPlayNext);
       this.audioElement.removeEventListener('timeupdate', this.onTimeUpdate);
       this.audioElement.removeEventListener('durationchange', this.onDurationUpdate);
+      this.audioElement.removeEventListener('pause', this.onPause);
+      this.audioElement.removeEventListener('play', this.onPlay);
+      if (!this.audioElement.ended && !this.audioElement.paused) {
+        this.audioElement.pause();
+      }
       delete this.audioElement;
     }
     const nowPlaying = this.playlist.nextItem();
@@ -39,6 +44,8 @@ class App extends Component {
     this.audioElement.addEventListener('ended', this.onPlayNext);
     this.audioElement.addEventListener('timeupdate', this.onTimeUpdate)
     this.audioElement.addEventListener('durationchange', this.onDurationUpdate)
+    this.audioElement.addEventListener('pause', this.onPause)
+    this.audioElement.addEventListener('play', this.onPlay)
     this.playAudio();
     this.setState({
       currentTimeSeconds: Math.floor(this.audioElement.currentTime),
@@ -59,19 +66,48 @@ class App extends Component {
     });
   }
 
+  onPause = () => {
+    this.setState({
+      paused: true,
+    });
+  }
+
+  onPlay = () => {
+    this.setState({
+      paused: false,
+    });
+  }
+
+  onPlayClick = () => {
+    if (this.state.paused) {
+      this.playAudio();
+    } else {
+      this.audioElement.pause();
+    }
+  }
+
   playAudio = () => {
     this.audioElement.play()
-      .then(() => this.setState({ cantAutoplay: false }))
-      .catch(() => this.setState({ cantAutoplay: true }));
+      .then(() => this.setState({ paused: false }))
+      .catch(() => this.setState({ paused: true }));
+  }
+
+  onNextClick = () => {
+    if (this.state.paused) {
+      this.playAudio();
+      return;
+    }
+
+    this.onPlayNext();
   }
 
   render() {
     const {
-      cantAutoplay,
       currentTimeSeconds,
       durationSeconds,
       error,
       nowPlaying,
+      paused,
     } = this.state;
     const showImageUrl = nowPlaying && nowPlaying.show && nowPlaying.show.image && nowPlaying.show.image.url;
     const episodeImageUrl = nowPlaying && nowPlaying.itunes && nowPlaying.itunes.image;
@@ -86,14 +122,15 @@ class App extends Component {
             episodeTitle={episodeTitle}
             showTitle={showTitle}
             imageUrl={imageUrl}
-            showPlayOverlay={!!cantAutoplay}
-            onPlayClick={this.playAudio}
+            showPlayOverlay={!!paused}
+            onPlayClick={this.onPlayClick}
           />
         )}
         {error && <p>error.toString()</p>}
         <PlayerControls
           currentTimeSeconds={currentTimeSeconds}
           durationSeconds={durationSeconds}
+          onNextClick={this.onNextClick}
         />
       </div>
     );
