@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import './App.css';
 
-import feeds from './rssFeeds';
-import ShuffledPlaylist from './shuffle';
+import feeds from '../rssFeeds';
+import ShuffledPlaylist from '../shuffle';
 import NowPlaying from './NowPlaying';
 import PlayerControls from './PlayerControls';
 

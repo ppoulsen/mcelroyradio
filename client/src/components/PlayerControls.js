@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { formatSeconds } from './utils/timeFormat';
+import { formatSeconds } from '../utils/timeFormat';
 import './PlayerControls.css';
 
 export default class PlayerControls extends React.PureComponent {
