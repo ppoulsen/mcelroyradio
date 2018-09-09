@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import GithubCorner from 'react-github-corner';
 import './App.css';
 
 import feeds from '../rssFeeds';
@@ -131,6 +132,11 @@ class App extends Component {
           currentTimeSeconds={currentTimeSeconds}
           durationSeconds={durationSeconds}
           onNextClick={this.onNextClick}
+        />
+        <GithubCorner
+          href="https://github.com/ppoulsen/mcelroyradio"
+          bannerColor="#1D386F"
+          size={50}
         />
       </div>
     );
