@@ -1,5 +1,6 @@
 const DEFAULT_OPTIONS = {
   dontRepeatFor: 20,
+  initialDiscard: [],
 }
 
 export default class ShuffledPlaylist {
@@ -9,7 +10,7 @@ export default class ShuffledPlaylist {
       ...DEFAULT_OPTIONS,
       ...options,
     }
-    this.discard = [];
+    this.discard = this.options.initialDiscard;
   }
 
   nextItem() {
